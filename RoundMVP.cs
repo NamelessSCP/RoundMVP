@@ -12,8 +12,9 @@
           public override string Author => "@misfiy";
           public override PluginPriority Priority => PluginPriority.Last;
           public static Plugin Instance;
+          public string FirstEscapeName;
+          public RoleTypeId FirstEscapeRole; 
           public Dictionary<string, int> RoundKills = new Dictionary<string, int>();
-          public KeyValuePair<string, RoleTypeId> FirstEscape = new KeyValuePair<string, RoleTypeId>();
           private Config config;
           private Handler handler;
           public override void OnEnabled()

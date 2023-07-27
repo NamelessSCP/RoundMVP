@@ -9,13 +9,15 @@ namespace RoundMVP
         public void OnWaiting()
         {
             Plugin.Instance.RoundKills.Clear();
-            Plugin.Instance.FirstEscape = new KeyValuePair<string, PlayerRoles.RoleTypeId>();
+            Plugin.Instance.FirstEscapeName = null;
+            Plugin.Instance.FirstEscapeRole = PlayerRoles.RoleTypeId.None;
         }
         public void OnEscaping(EscapingEventArgs ev)
         {
             if(!ev.IsAllowed) return;
-            if(!Plugin.Instance.FirstEscape.Key.IsEmpty()) return;
-            Plugin.Instance.FirstEscape = new KeyValuePair<string, PlayerRoles.RoleTypeId>(ev.Player.Nickname, ev.Player.Role.Type);
+            if(Plugin.Instance.FirstEscapeName != null) return;
+            Plugin.Instance.FirstEscapeName = ev.Player.Nickname;
+            Plugin.Instance.FirstEscapeRole = ev.Player.Role.Type;
         }
         public void OnDying(DyingEventArgs ev)
         {
@@ -65,13 +67,12 @@ namespace RoundMVP
                 string killsMessage = config.killsText.Replace("%killer%", topKiller).Replace("%kills%", topKillerKills.ToString());
                 message += killsMessage;
             }
-            if(Plugin.Instance.FirstEscape.Key.IsEmpty()) message += $"\n{config.escapeMessage}";
+            if(Plugin.Instance.FirstEscapeName == null) message += $"\n{config.escapeMessage}";
             else
             {
-                string escapeMessage = "\n" + config.escapeMessage.Replace("%escapee%", Plugin.Instance.FirstEscape.Key).Replace("%escaperole%", Plugin.Instance.FirstEscape.Value.ToString());
+                string escapeMessage = "\n" + config.escapeMessage.Replace("%escapee%", Plugin.Instance.FirstEscapeName).Replace("%escaperole%", Plugin.Instance.FirstEscapeRole.ToString());
                 message += escapeMessage;
             }
-            // message += $"\n{config.escapeMessage}";
             return message;
         }
     }
