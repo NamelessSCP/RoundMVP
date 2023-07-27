@@ -67,7 +67,7 @@ namespace RoundMVP
                 string killsMessage = config.killsText.Replace("%killer%", topKiller).Replace("%kills%", topKillerKills.ToString());
                 message += killsMessage;
             }
-            if(Plugin.Instance.FirstEscapeName == null) message += $"\n{config.escapeMessage}";
+            if(Plugin.Instance.FirstEscapeName == null) message += $"\n{config.noEscapesMessage}";
             else
             {
                 string escapeMessage = "\n" + config.escapeMessage.Replace("%escapee%", Plugin.Instance.FirstEscapeName).Replace("%escaperole%", Plugin.Instance.FirstEscapeRole.ToString());
