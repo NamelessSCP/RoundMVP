@@ -3,6 +3,7 @@ namespace RoundMVP
     using Exiled.Events.EventArgs.Player;
     using Exiled.Events.EventArgs.Server;
     using Exiled.API.Features;
+    using Exiled.API.Enums;
     public sealed class Handler
     {
         Config config = Plugin.Instance.Config;
@@ -12,12 +13,12 @@ namespace RoundMVP
             Plugin.Instance.FirstEscapeName = null;
             Plugin.Instance.FirstEscapeRole = PlayerRoles.RoleTypeId.None;
         }
-        public void OnEscaping(EscapingEventArgs ev)
+        public void OnSpawned(SpawnedEventArgs ev)
         {
-            if(!ev.IsAllowed) return;
+            if(ev.Reason != SpawnReason.Escaped) return;
             if(Plugin.Instance.FirstEscapeName != null) return;
             Plugin.Instance.FirstEscapeName = ev.Player.Nickname;
-            Plugin.Instance.FirstEscapeRole = ev.Player.Role.Type;
+            Plugin.Instance.FirstEscapeRole = ev.OldRole.Type;
         }
         public void OnDying(DyingEventArgs ev)
         {
@@ -67,7 +68,10 @@ namespace RoundMVP
                 string killsMessage = config.killsText.Replace("%killer%", topKiller).Replace("%kills%", topKillerKills.ToString());
                 message += killsMessage;
             }
-            if(Plugin.Instance.FirstEscapeName == null) message += $"\n{config.noEscapesMessage}";
+            if(Plugin.Instance.FirstEscapeName == null || Plugin.Instance.FirstEscapeName.IsEmpty())
+            {
+                message += "\n" + config.noEscapesMessage;
+            }
             else
             {
                 string escapeMessage = "\n" + config.escapeMessage.Replace("%escapee%", Plugin.Instance.FirstEscapeName).Replace("%escaperole%", Plugin.Instance.FirstEscapeRole.ToString());

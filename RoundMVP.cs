@@ -23,7 +23,7 @@
                config = Instance.Config;
                handler = new Handler();
                Exiled.Events.Handlers.Player.Dying += handler.OnDying;
-               Exiled.Events.Handlers.Player.Escaping += handler.OnEscaping;
+               Exiled.Events.Handlers.Player.Spawned += handler.OnSpawned;
                Exiled.Events.Handlers.Server.WaitingForPlayers += handler.OnWaiting;
                Exiled.Events.Handlers.Server.RoundEnded += handler.OnRoundEnd;
                base.OnEnabled();
@@ -32,7 +32,7 @@
           public override void OnDisabled()
           {
                Exiled.Events.Handlers.Player.Dying -= handler.OnDying;
-               Exiled.Events.Handlers.Player.Escaping -= handler.OnEscaping;
+               Exiled.Events.Handlers.Player.Spawned -= handler.OnSpawned;
                Exiled.Events.Handlers.Server.WaitingForPlayers -= handler.OnWaiting;
                Exiled.Events.Handlers.Server.RoundEnded -= handler.OnRoundEnd;
 
