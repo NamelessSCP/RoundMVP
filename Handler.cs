@@ -9,6 +9,13 @@ namespace RoundMVP
         public void OnWaiting()
         {
             Plugin.Instance.RoundKills.Clear();
+            Plugin.Instance.FirstEscape = new KeyValuePair<string, PlayerRoles.RoleTypeId>();
+        }
+        public void OnEscaping(EscapingEventArgs ev)
+        {
+            if(!ev.IsAllowed) return;
+            if(!Plugin.Instance.FirstEscape.Key.IsEmpty()) return;
+            Plugin.Instance.FirstEscape = new KeyValuePair<string, PlayerRoles.RoleTypeId>(ev.Player.Nickname, ev.Player.Role.Type);
         }
         public void OnDying(DyingEventArgs ev)
         {
@@ -48,8 +55,23 @@ namespace RoundMVP
             string? topKiller;
             int topKillerKills;
             GetHighestKillCount(out topKiller, out topKillerKills);
-            if(topKiller == null) return config.noKillsText;
-            string message = config.killsText.Replace("%killer%", topKiller).Replace("%kills%", topKillerKills.ToString());
+            string message = "";
+            if(topKiller == null) 
+            {
+                message += config.noKillsText;
+            }
+            else 
+            {
+                string killsMessage = config.killsText.Replace("%killer%", topKiller).Replace("%kills%", topKillerKills.ToString());
+                message += killsMessage;
+            }
+            if(Plugin.Instance.FirstEscape.Key.IsEmpty()) message += $"\n{config.escapeMessage}";
+            else
+            {
+                string escapeMessage = "\n" + config.escapeMessage.Replace("%escapee%", Plugin.Instance.FirstEscape.Key).Replace("%escaperole%", Plugin.Instance.FirstEscape.Value.ToString());
+                message += escapeMessage;
+            }
+            // message += $"\n{config.escapeMessage}";
             return message;
         }
     }
