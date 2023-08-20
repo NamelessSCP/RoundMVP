@@ -10,9 +10,9 @@ namespace RoundMVP
      {
           public bool IsEnabled { get; set; } = true;
           public bool Debug { get; set; } = false;
-          public string killsText { get; set; } = "%killer% got %kills% kills";
-          public string noKillsText { get; set; } = "No one got any kills this round!";
-          public string escapeMessage { get; set; } = "%escapee% was the first to escape as a %escaperole%!";
-          public string noEscapesMessage { get; set; } = "No one escaped this round!";
+          public string HumanKillerText { get; set; } = "%name% got the most kills as a human: %kills%";
+          public string ScpKillerText { get; set; } = "%name% got the most kills as SCP: %kills%";
+          public string EscapeMessage { get; set; } = "%name% was the first to escape as a %role%!";
+          public string FirstScpKill { get; set; } = "%name% was the first to kill an SCP as a %role%";
      }
 }

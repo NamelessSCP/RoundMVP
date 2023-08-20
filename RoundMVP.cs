@@ -12,9 +12,6 @@
           public override string Author => "@misfiy";
           public override PluginPriority Priority => PluginPriority.Last;
           public static Plugin Instance;
-          public string? FirstEscapeName;
-          public RoleTypeId FirstEscapeRole; 
-          public Dictionary<string, int> RoundKills = new Dictionary<string, int>();
           private Config config;
           private Handler handler;
           public override void OnEnabled()
@@ -22,16 +19,17 @@
                Instance = this;
                config = Instance.Config;
                handler = new Handler();
-               Exiled.Events.Handlers.Player.Dying += handler.OnDying;
+               Exiled.Events.Handlers.Player.Died += handler.OnDied;
                Exiled.Events.Handlers.Player.Spawned += handler.OnSpawned;
                Exiled.Events.Handlers.Server.WaitingForPlayers += handler.OnWaiting;
                Exiled.Events.Handlers.Server.RoundEnded += handler.OnRoundEnd;
+
                base.OnEnabled();
           }
 
           public override void OnDisabled()
           {
-               Exiled.Events.Handlers.Player.Dying -= handler.OnDying;
+               Exiled.Events.Handlers.Player.Died -= handler.OnDied;
                Exiled.Events.Handlers.Player.Spawned -= handler.OnSpawned;
                Exiled.Events.Handlers.Server.WaitingForPlayers -= handler.OnWaiting;
                Exiled.Events.Handlers.Server.RoundEnded -= handler.OnRoundEnd;
@@ -42,5 +40,3 @@
           }
      }
 }
-
-// player.TryAddCandy(InventorySystem.Items.Usables.Scp330.CandyKindID.Pink);
