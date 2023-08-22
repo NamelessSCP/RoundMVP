@@ -29,6 +29,14 @@ namespace RoundMVP
           }
           public void OnDied(DiedEventArgs ev)
           {
+               if (ev.DamageHandler.Type == DamageType.PocketDimension)
+               {
+                    foreach(Player scp in Player.List.Where(p => p.Role.Type == RoleTypeId.Scp106))
+                    {
+                         if(!scpKills.ContainsKey(scp)) scpKills.Add(scp, 0);
+                         else scpKills[scp]++;
+                    }
+               }
                if (ev.Attacker == null) return;
                if(ev.Attacker.IsScp)
                {
@@ -51,8 +59,8 @@ namespace RoundMVP
                Player? humanKiller = GetTopHumanKills();
                Player? scpKiller = GetTopScpKills();
                
-               if(humanKiller != null) text += $"{config.HumanKillerText.Replace("%killer%", humanKiller.Nickname).Replace("%kills%", humanKills[humanKiller].ToString())}\n";
-               if(scpKiller != null) text += $"{config.ScpKillerText.Replace("%killer%", scpKiller.Nickname).Replace("%kills%", scpKills[scpKiller].ToString())}\n";
+               if(humanKiller != null) text += $"{config.HumanKillerText.Replace("%name%", humanKiller.Nickname).Replace("%kills%", humanKills[humanKiller].ToString())}\n";
+               if(scpKiller != null) text += $"{config.ScpKillerText.Replace("%name%", scpKiller.Nickname).Replace("%kills%", scpKills[scpKiller].ToString())}\n";
                if(!escapes.IsEmpty()) text += $"{config.EscapeMessage.Replace("%name%", escapes.First().Key.Nickname).Replace("%role%", escapes.First().Value.ToString())}\n";
                if(!scpKillers.IsEmpty()) text += $"{config.FirstScpKill.Replace("%name%", scpKillers.First().Key.Nickname).Replace("%role%", scpKillers.First().Value.ToString())}\n";
 
