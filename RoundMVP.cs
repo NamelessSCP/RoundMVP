@@ -12,12 +12,10 @@
           public override string Author => "@misfiy";
           public override PluginPriority Priority => PluginPriority.Last;
           public static Plugin Instance;
-          private Config config;
           private Handler handler;
           public override void OnEnabled()
           {
                Instance = this;
-               config = Instance.Config;
                handler = new Handler();
                Exiled.Events.Handlers.Player.Died += handler.OnDied;
                Exiled.Events.Handlers.Player.Spawned += handler.OnSpawned;
