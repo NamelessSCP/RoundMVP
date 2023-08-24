@@ -42,14 +42,13 @@ namespace RoundMVP
                {
                     if(!scpKills.ContainsKey(ev.Attacker)) scpKills.Add(ev.Attacker, 0);
                     else scpKills[ev.Attacker]++;
-
-
-                    if(!scpKillers.ContainsKey(ev.Attacker)) scpKillers.Add(ev.Attacker, ev.Attacker.Role.Type);
                }
                else
                {
                     if(!humanKills.ContainsKey(ev.Attacker)) humanKills.Add(ev.Attacker, 0);
                     else humanKills[ev.Attacker]++;
+
+                    if(ev.Player.IsScp && !scpKillers.ContainsKey(ev.Attacker)) scpKillers.Add(ev.Attacker, ev.Attacker.Role.Type);
                }
           }
           public void OnRoundEnd(RoundEndedEventArgs ev)
@@ -90,48 +89,5 @@ namespace RoundMVP
 
                return player;
           }
-
-
-          //private void GetHighestKillCount(out string? topKiller, out int kills)
-          //{
-          //     int highestScore = 0;
-          //     string? playerWithHighestScore = null;
-          //     foreach (var entry in Plugin.Instance.RoundKills)
-          //     {
-          //          if (entry.Value > highestScore)
-          //          {
-          //               highestScore = entry.Value;
-          //               playerWithHighestScore = entry.Key;
-          //          }
-          //     }
-          //     topKiller = playerWithHighestScore;
-          //     kills = highestScore;
-          //}
-          //public string GetEndMessage()
-          //{
-          //     string? topKiller;
-          //     int topKillerKills;
-          //     GetHighestKillCount(out topKiller, out topKillerKills);
-          //     string message = "";
-          //     if (topKiller == null)
-          //     {
-          //          message += config.noKillsText;
-          //     }
-          //     else
-          //     {
-          //          string killsMessage = config.killsText.Replace("%killer%", topKiller).Replace("%kills%", topKillerKills.ToString());
-          //          message += killsMessage;
-          //     }
-          //     if (Plugin.Instance.FirstEscapeName == null || Plugin.Instance.FirstEscapeName.IsEmpty())
-          //     {
-          //          message += "\n" + config.noEscapesMessage;
-          //     }
-          //     else
-          //     {
-          //          string escapeMessage = "\n" + config.escapeMessage.Replace("%escapee%", Plugin.Instance.FirstEscapeName).Replace("%escaperole%", Plugin.Instance.FirstEscapeRole.ToString());
-          //          message += escapeMessage;
-          //     }
-          //     return message;
-          //}
      }
 }
