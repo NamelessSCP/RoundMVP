@@ -47,9 +47,8 @@ namespace RoundMVP
                {
                     if(!humanKills.ContainsKey(ev.Attacker)) humanKills.Add(ev.Attacker, 0);
                     else humanKills[ev.Attacker]++;
-
-                    if(ev.Player.IsScp && !scpKillers.ContainsKey(ev.Attacker)) scpKillers.Add(ev.Attacker, ev.Attacker.Role.Type);
                }
+               if(ev.Player.IsScp && !scpKillers.ContainsKey(ev.Attacker)) scpKillers.Add(ev.Attacker, ev.Attacker.Role.Type);
           }
           public void OnRoundEnd(RoundEndedEventArgs ev)
           {
