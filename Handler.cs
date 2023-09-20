@@ -33,19 +33,19 @@ namespace RoundMVP
                {
                     foreach(Player scp in Player.List.Where(p => p.Role.Type == RoleTypeId.Scp106))
                     {
-                         if(!scpKills.ContainsKey(scp)) scpKills.Add(scp, 0);
+                         if(!scpKills.ContainsKey(scp)) scpKills.Add(scp, 1);
                          else scpKills[scp]++;
                     }
                }
                if (ev.Attacker == null) return;
                if(ev.Attacker.IsScp)
                {
-                    if(!scpKills.ContainsKey(ev.Attacker)) scpKills.Add(ev.Attacker, 0);
+                    if(!scpKills.ContainsKey(ev.Attacker)) scpKills.Add(ev.Attacker, 1);
                     else scpKills[ev.Attacker]++;
                }
                else
                {
-                    if(!humanKills.ContainsKey(ev.Attacker)) humanKills.Add(ev.Attacker, 0);
+                    if(!humanKills.ContainsKey(ev.Attacker)) humanKills.Add(ev.Attacker, 1);
                     else humanKills[ev.Attacker]++;
                }
                if(ev.Player.IsScp && !scpKillers.ContainsKey(ev.Attacker)) scpKillers.Add(ev.Attacker, ev.Attacker.Role.Type);
